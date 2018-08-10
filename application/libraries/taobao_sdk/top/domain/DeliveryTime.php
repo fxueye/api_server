@@ -20,16 +20,6 @@ class DeliveryTime
 	/** 
 	 * 设置是否使用发货时间，商品级别，sku级别
 	 **/
-	public $need_delivery_time;
-	
-	/** 
-	 * 商品自动退款参数
-	 **/
-	public $onsale_auto_refund_ratio;
-	
-	/** 
-	 * 发货时间列表
-	 **/
-	public $skus_delivery_time_list;	
+	public $need_delivery_time;	
 }
 ?>

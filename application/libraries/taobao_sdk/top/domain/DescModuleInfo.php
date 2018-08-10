@@ -13,11 +13,6 @@ class DescModuleInfo
 	public $anchor_module_ids;
 	
 	/** 
-	 * 宝贝模块id
-	 **/
-	public $ids_module_ids;
-	
-	/** 
 	 * 类型代表规范化打标的类型：人工或自动化
 	 **/
 	public $type;	

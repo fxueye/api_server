@@ -83,6 +83,11 @@ class SpiUtils{
 	private static function getHeaderMap() {
 		$headerMap = array();
 		$signList = $_SERVER['HTTP_TOP_SIGN_LIST']; // 只获取参与签名的头部字段
+
+		if(!$signList) {
+			return $headerMap;
+		}
+
 		$signList = trim($signList);
 		if (strlen($signList) > 0){
 			$params = split(",", $signList);

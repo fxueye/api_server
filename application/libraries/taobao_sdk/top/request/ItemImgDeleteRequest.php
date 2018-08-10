@@ -3,7 +3,7 @@
  * TOP API: taobao.item.img.delete request
  * 
  * @author auto create
- * @since 1.0, 2015.05.08
+ * @since 1.0, 2018.07.25
  */
 class ItemImgDeleteRequest
 {

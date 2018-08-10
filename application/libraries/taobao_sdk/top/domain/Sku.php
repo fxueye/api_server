@@ -23,9 +23,19 @@ class Sku
 	public $created;
 	
 	/** 
+	 * skuDeliveryTimeType
+	 **/
+	public $delivery_time_type;
+	
+	/** 
 	 * 扩展sku的id
 	 **/
 	public $extra_id;
+	
+	/** 
+	 * 
+	 **/
+	public $gmt_modified;
 	
 	/** 
 	 * sku所属商品id(注意：iid近期即将废弃，请用num_iid参数)
@@ -78,6 +88,11 @@ class Sku
 	public $sku_delivery_time;
 	
 	/** 
+	 * skuFeature
+	 **/
+	public $sku_feature;
+	
+	/** 
 	 * sku的id
 	 **/
 	public $sku_id;
@@ -86,6 +101,11 @@ class Sku
 	 * 表示SKu上的产品规格信息
 	 **/
 	public $sku_spec_id;
+	
+	/** 
+	 * specId
+	 **/
+	public $spec_id;
 	
 	/** 
 	 * sku状态。 normal:正常 ；delete:删除

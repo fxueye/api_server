@@ -1,30 +1,45 @@
 <?php
 
 /**
- * result
+ * 接口返回model
  * @author auto create
  */
 class Result
 {
 	
 	/** 
-	 * code
+	 * 错误码
 	 **/
-	public $code;
+	public $error_code;
 	
 	/** 
-	 * 是否存在
+	 * 错误信息
 	 **/
-	public $model;
+	public $error_msg;
 	
 	/** 
-	 * 返回描述
+	 * 额外扩展信息
 	 **/
-	public $msg;
+	public $extra;
 	
 	/** 
-	 * 是否异常
+	 * 返回信息
 	 **/
-	public $success;	
+	public $message;
+	
+	/** 
+	 * 返回数据
+	 **/
+	public $result_value;
+	
+	/** 
+	 * 成功或者失败
+	 **/
+	public $success;
+	
+	/** 
+	 * 额外的扩展字段
+	 **/
+	public $tracker;	
 }
 ?>

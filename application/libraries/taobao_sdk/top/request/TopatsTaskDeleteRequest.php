@@ -3,7 +3,7 @@
  * TOP API: taobao.topats.task.delete request
  * 
  * @author auto create
- * @since 1.0, 2014.03.27
+ * @since 1.0, 2018.07.25
  */
 class TopatsTaskDeleteRequest
 {

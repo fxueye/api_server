@@ -3,7 +3,7 @@
  * TOP API: taobao.item.joint.img request
  * 
  * @author auto create
- * @since 1.0, 2016.03.15
+ * @since 1.0, 2018.07.25
  */
 class ItemJointImgRequest
 {
@@ -16,6 +16,11 @@ class ItemJointImgRequest
 	 * 上传的图片是否关联为商品主图
 	 **/
 	private $isMajor;
+	
+	/** 
+	 * 是否3:4长方形图片，绑定3:4主图视频时用于上传3:4商品主图
+	 **/
+	private $isRectangle;
 	
 	/** 
 	 * 商品数字ID，必选
@@ -54,6 +59,17 @@ class ItemJointImgRequest
 	public function getIsMajor()
 	{
 		return $this->isMajor;
+	}
+
+	public function setIsRectangle($isRectangle)
+	{
+		$this->isRectangle = $isRectangle;
+		$this->apiParas["is_rectangle"] = $isRectangle;
+	}
+
+	public function getIsRectangle()
+	{
+		return $this->isRectangle;
 	}
 
 	public function setNumIid($numIid)

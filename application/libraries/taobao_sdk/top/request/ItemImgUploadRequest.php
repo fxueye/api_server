@@ -3,7 +3,7 @@
  * TOP API: taobao.item.img.upload request
  * 
  * @author auto create
- * @since 1.0, 2017.06.07
+ * @since 1.0, 2018.07.24
  */
 class ItemImgUploadRequest
 {
@@ -21,6 +21,11 @@ class ItemImgUploadRequest
 	 * 是否将该图片设为主图,可选值:true,false;默认值:false(非主图)
 	 **/
 	private $isMajor;
+	
+	/** 
+	 * 是否3:4长方形图片，绑定3:4主图视频时用于上传3:4商品主图
+	 **/
+	private $isRectangle;
 	
 	/** 
 	 * 商品数字ID，该参数必须
@@ -65,6 +70,17 @@ class ItemImgUploadRequest
 	public function getIsMajor()
 	{
 		return $this->isMajor;
+	}
+
+	public function setIsRectangle($isRectangle)
+	{
+		$this->isRectangle = $isRectangle;
+		$this->apiParas["is_rectangle"] = $isRectangle;
+	}
+
+	public function getIsRectangle()
+	{
+		return $this->isRectangle;
 	}
 
 	public function setNumIid($numIid)
