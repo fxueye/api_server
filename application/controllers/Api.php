@@ -17,6 +17,6 @@ class Api extends MY_Controller {
         $this->load->model('api/api_model');
     }
     function index(){
-        
+        echo "1";
     }
 }
