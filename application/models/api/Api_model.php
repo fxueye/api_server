@@ -24,7 +24,7 @@ class Api_model extends MY_Model {
         $this->tao_client->secretKey = $tao_app_secret;
 
     }
-    public function get_coupon($itemId,$activityId=""){
+    public function get_coupon_info($itemId,$activityId=""){
         $req = new TbkCouponGetRequest();
         $req->setItemId($itemId."");
         if($activityId == ""){
