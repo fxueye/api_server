@@ -25,14 +25,15 @@ class Api_model extends MY_Model {
 
     }
     public function get_coupon($itemId,$activityId=""){
-        $req = new TbkCouponGetRequest;
+        $req = new TbkCouponGetRequest();
         $req->setItemId($itemId."");
-        $req->setActivityId($activityId."");
+        if($activityId == ""){
+            $req->setActivityId($activityId."");
+        }
         $resp = $c->execute($req);
         log_message(json_encode($resp));
     }
     public function get_coupon($w,$pageSize,$pageNo,$platform){
-
         $req = new TbkDgItemCouponGetRequest();
         $req->setAdzoneId($this->adzoneId);
         $req->setPlatform($platform."");
