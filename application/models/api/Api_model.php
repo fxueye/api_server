@@ -24,13 +24,19 @@ class Api_model extends MY_Model {
         $this->tao_client->secretKey = $tao_app_secret;
 
     }
-
+    public function get_coupon($itemId,$activityId=""){
+        $req = new TbkCouponGetRequest;
+        $req->setItemId($itemId."");
+        $req->setActivityId($activityId."");
+        $resp = $c->execute($req);
+        log_message(json_encode($resp));
+    }
     public function get_coupon($w,$pageSize,$pageNo,$platform){
 
         $req = new TbkDgItemCouponGetRequest();
         $req->setAdzoneId($this->adzoneId);
-        $req->setPlatform($platform+"");
-        $req->setPageSize($pageSize+"");
+        $req->setPlatform($platform."");
+        $req->setPageSize($pageSize."");
         $req->setQ($w);
         $req->setPageNo($pageNo+"");
         $resp = $this->tao_client->execute($req);
@@ -41,13 +47,11 @@ class Api_model extends MY_Model {
                 for($y = 0; $y < count($items);$y ++){
                     $item = $items[$y];
                     $gcat_id=0;
-                    $create_ts = time();
                     $small_images = '';
                     if (isset($item->small_images)){
                         $small_images = json_encode($item->small_images->string);
                     }
                     $title = $item->title;
-                    $tags="";
                     $shop_title = $item->shop_title;
                     $user_type = $item->user_type;
                     $zk_final_price = $item->zk_final_price;
@@ -77,10 +81,7 @@ class Api_model extends MY_Model {
                     $item_description = $item->item_description;
                     $coupon_click_url = $item->coupon_click_url;
                     $data = array(
-                        'tags' => $tags,
                         'gcat_id' => $gcat_id,
-                        'create_ts' => $create_ts,
-                        'update_ts' => strtotime(date("Y-m-d 00:00:00",$create_ts)),
                         'small_images' => $small_images,
                         'title'=>$title,
                         'shop_title' =>$shop_title,
