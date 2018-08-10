@@ -38,6 +38,14 @@ class Api_model extends MY_Model {
         $resp = $this->tao_client->execute($req);
         log_message("error",json_encode($resp));
         if(isset($resp->results)){
+            if($resp->total_results > 0){
+                $items = $resp->results->tbk_coupon;
+                for($y = 0; $y < count($items);$y ++){
+                    $item = $resp->results->tbk_coupon[$y];
+                    $num_iid = $item->num_iid;
+                    log_message(ERROR,"num_iid:" + $num_iid);
+                }
+            }
             return json_encode($resp);
         }
         $this->CI->error->set_error(Err_Code::ERR_NO_SELECT_DATA);
