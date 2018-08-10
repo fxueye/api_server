@@ -31,7 +31,7 @@ class Api_model extends MY_Model {
             $req->setActivityId($activityId."");
         }
         $resp = $this->tao_client->execute($req);
-        log_message(json_encode($resp));
+        log_message(ERROR,json_encode($resp));
     }
     public function get_coupon($w,$pageSize,$pageNo,$platform){
         $req = new TbkDgItemCouponGetRequest();
