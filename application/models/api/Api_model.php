@@ -34,17 +34,78 @@ class Api_model extends MY_Model {
         $req->setQ($w);
         $req->setPageNo($pageNo+"");
         $resp = $this->tao_client->execute($req);
-        
+        $item_list = array();
         if(isset($resp->results)){
             if($resp->total_results > 0){
                 $items = $resp->results->tbk_coupon;
                 for($y = 0; $y < count($items);$y ++){
-                    $item = $resp->results->tbk_coupon[$y];
-                    $num_iid = $item->num_iid;
-                    log_message(ERROR,"num_iid:" );
+                    $item = $items[$y];
+                    $gcat_id=0;
+                    $create_ts = time();
+                    $small_images = '';
+                    if (isset($item->small_images)){
+                        $small_images = json_encode($item->small_images->string);
+                    }
+                    $title = $item->title;
+                    $tags="";
+                    $shop_title = $item->shop_title;
+                    $user_type = $item->user_type;
+                    $zk_final_price = $item->zk_final_price;
+                    $nick = $item->nick;
+                    $seller_id = $item->seller_id;
+                    $volume = $item->volume;
+                    $pict_url = $item->pict_url."_250x250";
+                    $item_url = $item->item_url;
+                    $coupon_total_count = isset($item->coupon_total_count) ? $item->coupon_total_count: 0 ;
+                    $commission_rate = $item->commission_rate;
+                    if(!isset($item->coupon_info)){
+                        continue;	
+                    }
+                    $coupon_info = isset($item->coupon_info) ? $item->coupon_info : "" ;
+                    $category = $item->category;
+                    $num_iid =$item->num_iid;
+                    $coupon_remain_count = isset($item->coupon_remain_count) ?$item->coupon_remain_count : 0 ;
+                    $coupon_start_time = "";
+                    if(isset($item->coupon_start_time)){
+                        $coupon_start_time=$item->coupon_start_time;
+                    }
+                    $coupon_end_time = "";
+                    if(isset($item->coupon_end_time)){
+                        strtotime($item->coupon_end_time);
+                    }
+    
+                    $item_description = $item->item_description;
+                    $coupon_click_url = $item->coupon_click_url;
+                    $data = array(
+                        'tags' => $tags,
+                        'gcat_id' => $gcat_id,
+                        'create_ts' => $create_ts,
+                        'update_ts' => strtotime(date("Y-m-d 00:00:00",$create_ts)),
+                        'small_images' => $small_images,
+                        'title'=>$title,
+                        'shop_title' =>$shop_title,
+                        'user_type' =>$user_type,
+                        'zk_final_price' =>$zk_final_price,
+                        'nick' => $nick,
+                        'seller_id' => $seller_id,
+                        'volume' => $volume,
+                        'pict_url'=>$pict_url,
+                        'item_url' => $item_url,
+                        'coupon_total_count' => $coupon_total_count,
+                        'commission_rate'=>$commission_rate,
+                        'coupon_info'=>$coupon_info,
+                        'category' => $category,
+                        'num_iid' => $num_iid,
+                        'coupon_remain_count' => $coupon_remain_count,
+                        'coupon_start_time' =>$coupon_start_time,
+                        'coupon_end_time' => $coupon_end_time,
+                        'item_description' => $item_description,
+                        'coupon_click_url' => $coupon_click_url
+                    );
+                    $item_list[] = $data;
                 }
             }
-            return json_encode($resp);
+            return $item_list;
         }
     }
 

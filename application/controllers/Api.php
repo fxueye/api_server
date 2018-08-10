@@ -18,6 +18,6 @@ class Api extends MY_Controller {
     }
     function index(){
         $ret = $this->api_model->get_coupon("女装",20,1,2);
-        echo $ret;
+        echo json_encode($ret);
     }
 }
