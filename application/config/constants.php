@@ -93,6 +93,3 @@ defined('DEBUG') OR define('DEBUG','debug');
 define("TOP_SDK_WORK_DIR", "/tmp/");
 define("TOP_SDK_DEV_MODE", true);
 define("TOP_AUTOLOADER_PATH", "./application/libraries/taobao_sdk/");
-
-define("TOP_SDK_ADZONE_ID","145626192");
-define("TOP_SDK_PLATFORM","2");

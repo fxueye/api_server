@@ -12,6 +12,8 @@ $config['tao_app_secret']=getenv("TAO_APP_SECRET");
 
 $config['report_path'] = getenv("PROJECT_REPORT_LOG_PATH");
 
+$config['tao_pid'] = getenv("TAO_PID");
+
 // $config['app_key'] = "aaaaaaaaaaaaaaaa";
 // $config['app_iv'] = "aaaaaaaaaaaaaaaa";
 
