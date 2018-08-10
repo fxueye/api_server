@@ -38,7 +38,7 @@ class Api_model extends MY_Model {
         $resp = $this->tao_client->execute($req);
         log_message("error",json_encode($resp));
         if(isset($resp->results)){
-
+            return json_encode($resp);
         }
         $this->CI->error->set_error(Err_Code::ERR_NO_SELECT_DATA);
         return false;
