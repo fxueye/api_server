@@ -12,9 +12,7 @@ class Api_model extends MY_Model {
         $tao_app_key = get_env_config("tao_app_key");
         $tao_app_secret = get_env_config("tao_app_secret");
         $this->pid = get_env_config("tao_pid");
-        log_message("error","pid:"+$this->pid);
         $strs = explode("_",$this->pid);
-        log_message("error",json_encode($strs));
         if(count($strs) == 4){
             $this->adzoneId= $strs[3];
         }
@@ -43,13 +41,11 @@ class Api_model extends MY_Model {
                 for($y = 0; $y < count($items);$y ++){
                     $item = $resp->results->tbk_coupon[$y];
                     $num_iid = $item->num_iid;
-                    log_message(ERROR,"num_iid:" + $num_iid);
+                    log_message(ERROR,"num_iid:" );
                 }
             }
             return json_encode($resp);
         }
-        $this->CI->error->set_error(Err_Code::ERR_NO_SELECT_DATA);
-        return false;
     }
 
 }
