@@ -17,6 +17,7 @@ class Api extends MY_Controller {
         $this->load->model('api/api_model');
     }
     function index(){
+        $this->api_model->get_coupon("女装",20,1,2);
         echo "1";
     }
 }
