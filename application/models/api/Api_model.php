@@ -15,8 +15,8 @@ class Api_model extends MY_Model {
         log_message("error","pid:"+$this->pid);
         $strs = explode("_",$this->pid);
         log_message("error",json_encode($strs));
-        if(count($strs) == 5){
-            $this->adzoneId= $strs[4];
+        if(count($strs) == 4){
+            $this->adzoneId= $strs[3];
         }
 
         $this->load->library("taobao_sdk/Autoloader");
