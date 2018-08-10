@@ -17,9 +17,9 @@ class MY_Model extends CI_Model {
         // $this->CI->cache->memcached->is_supported();
         $this->now_time = time();
         $this->ip = get_ip();
-        if($db_key){
-            $this->db = $this->get_db_instance($db_key);
-        }
+        // if($db_key){
+        //     $this->db = $this->get_db_instance($db_key);
+        // }
     }
     
     /**

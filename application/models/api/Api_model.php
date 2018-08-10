@@ -2,6 +2,7 @@
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 class Api_model extends MY_Model {
+    const DB_KEY = "";
     function __construct() {
         parent::__construct(self::DB_KEY);
         date_default_timezone_set('Asia/Shanghai'); 
