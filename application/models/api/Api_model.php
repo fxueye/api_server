@@ -27,10 +27,10 @@ class Api_model extends MY_Model {
     public function get_coupon_info($itemId,$activityId=""){
         $req = new TbkCouponGetRequest();
         $req->setItemId($itemId."");
-        if($activityId == ""){
+        if($activityId != ""){
             $req->setActivityId($activityId."");
         }
-        $resp = $c->execute($req);
+        $resp = $this->tao_client->execute($req);
         log_message(json_encode($resp));
     }
     public function get_coupon($w,$pageSize,$pageNo,$platform){
