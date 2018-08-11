@@ -94,7 +94,7 @@ class Api_model extends MY_Model {
     public function get_tpwd($text,$url,$logo = "",$user_id = "",$ext = ""){
         $req = new TbkTpwdCreateRequest;
         if($user_id != ""){
-            $req->setUserId($user_id."";
+            $req->setUserId($user_id."");
         }
         $req->setText($text."");
         $req->setUrl($url);
