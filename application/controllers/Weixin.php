@@ -7,12 +7,12 @@ class Weixin extends CI_Controller {
 		$this->wechat = new CI_Wechat();
 	}
 	public function index() {
-		$this->output->enable_profiler(TRUE);
-		$this->wechat->valid ();
-        $b = true;
-        if($b){
-            return;
-        }
+		// $this->output->enable_profiler(TRUE);
+		// $this->wechat->valid ();
+        // $b = true;
+        // if($b){
+        //     return;
+        // }
         $type = $this->wechat->getRev()->getRevType ();
 		log_message ( 'info', 'type:' . $type );
 		log_message ( 'info', 'rev:' . json_encode ( $this->wechat->getRevData () ) );
