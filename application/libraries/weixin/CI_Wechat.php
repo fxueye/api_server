@@ -17,8 +17,7 @@ class CI_Wechat extends Wechat {
     protected $_CI;
     public function __construct() {
         $this->_CI =& get_instance();
-        $this->_CI->config->load('wechat');
-        $options = $this->_CI->config->item('wechat');
+        $options = get_env_config('wechat');
 
         // $this->_CI->load->driver('cache', array('adapter' => 'apc', 'backup' => 'file'));
         $this->_CI->load->driver('cache',array(
