@@ -37,12 +37,12 @@ class Api_model extends MY_Model {
         log_message(ERROR,json_encode($resp));
     }
     /**
-    * page_no	Number	false	1	第几页，从1开始计数
+    *page_no	Number	false	1	第几页，从1开始计数
     *page_size	Number	false	20	默认20，页大小，即每一页的活动个数
     *fields	String	true	favorites_title,favorites_id,type	需要返回的字段列表，不能为空，字段名之间使用逗号分隔
     *type	Number	false	1	默认值-1；选品库类型，1：普通选品组，2：高佣选品组，-1，同时输出所有类型的选品组
      */
-    public function get_favorites($pageSize = 20,$pageNo = 1,$type = 2){
+    public function get_favorites($pageSize = 20,$pageNo = 1,$type = -1){
         $req = new TbkUatmFavoritesGetRequest;
         $req->setPageNo($pageNo);
         $req->setPageSize($pageSize);
@@ -52,15 +52,17 @@ class Api_model extends MY_Model {
         log_message(ERROR,json_encode($resp));
         $item_list = array();
         if(isset($resp->results)){
-            $items= $resp->results->tbk_favorites;
-            for($i = 0; $i < count($items); $i++){
-                $item = $items[$i];
-                $data = array(
-                    "type"=>$item->type,
-                    "favorites_id"=>$item->favorites_id,
-                    "favorites_title"=>$item->favorites_title
-                );
-                $item_list[] = $data;
+            if($resp->total_results > 0){
+                $items= $resp->results->tbk_favorites;
+                for($i = 0; $i < count($items); $i++){
+                    $item = $items[$i];
+                    $data = array(
+                        "type"=>$item->type,
+                        "favorites_id"=>$item->favorites_id,
+                        "favorites_title"=>$item->favorites_title
+                    );
+                    $item_list[] = $data;
+                }
             }
         }
         return $item_list;
