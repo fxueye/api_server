@@ -45,13 +45,7 @@ class Weixin extends CI_Controller {
 	private function event_key($key) {
 		switch ($key) {
 			case "TANGTANG_01" :
-				$text = "啊哈，亲爱哒宝贝，先把这些入门技能学起来才能生存啊！
-
-1. <a href='http://mp.weixin.qq.com/s?__biz=MzIwMjEwNjU0NA==&mid=404913033&idx=1&sn=df14eda52aff2f48771ec88560f8ac7a#rd'>入门篇-基础炸刺</a>
-
-2. <a href='http://mp.weixin.qq.com/s?__biz=MzIwMjEwNjU0NA==&mid=404922987&idx=1&sn=2507410b1ab8c0d8241a189470b997a1#rd'>入门篇-基础中吐</a>
-
-更多攻略，尽请期待~";
+				$text = "";
 				log_message ( 'info', 'text:' . $text );
 				$this->wechat->text ( $text )->reply ();
 				exit ();
@@ -74,8 +68,7 @@ class Weixin extends CI_Controller {
 				break;
 			case "TANGTANG_05" :
 				
-				$text = "恭喜宝贝成功抢到棒棒糖兑换码：[" . md5 ( uniqid ( mt_rand (), true ) ) . "]，长按全部消息复制黏贴到游戏内即可领取！
-本宝友情提示：进化等级达到5级才能兑换哦！";
+				$text = "";
 				log_message ( 'info', 'text:' . $text );
 				$this->wechat->text ( $text )->reply ();
 				exit ();
