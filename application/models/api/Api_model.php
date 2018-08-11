@@ -41,6 +41,7 @@ class Api_model extends MY_Model {
         $req->setQ($w);
         $req->setPageNo($pageNo+"");
         $resp = $this->tao_client->execute($req);
+        log_message(ERROR,json_encode($resp));
         $item_list = array();
         if(isset($resp->results)){
             if($resp->total_results > 0){
