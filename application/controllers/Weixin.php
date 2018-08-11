@@ -42,7 +42,7 @@ class Weixin extends CI_Controller {
     private function msgHandler($msg){
         $code = $msg->Content;
         switch($code){
-            case 1:
+            case "1":
                 $coupon = $this->randomCoupon();
                 $title = $coupon['title'];
                 $couponInfo = $coupon['coupon_info'];
@@ -55,7 +55,7 @@ class Weixin extends CI_Controller {
 
                 $retMsg = sprintf($this->message,$title,$commission_rate,$arr[1],"0",$coupon_click_url,$tpwd);
             break;
-            case 2:
+            case "2":
 
             break;
             default:
