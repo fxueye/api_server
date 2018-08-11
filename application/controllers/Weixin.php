@@ -2,7 +2,7 @@
 defined ( 'BASEPATH' ) or exit ( 'No direct script access allowed' );
 class Weixin extends CI_Controller {
     private $wechat;
-    private $message = "%s\n【原价】: %s元\n【内部优惠券】: %s元\n【券后价】: %s元\n【浏览器下单】:%s\n【淘口令下单】: 复制这条信息，打开→手机淘宝领取优惠券%s";
+    private $message = "%s\n【原价】: %s元\n【内部优惠券】: %s元\n【券后价】: %s元\n【淘口令下单】: 复制这条信息，打开→手机淘宝领取优惠券%s";
 	public function __construct() {
 		parent::__construct ();
         $this->wechat = new CI_Wechat();
@@ -50,10 +50,9 @@ class Weixin extends CI_Controller {
                 $zk_final_price = $coupon['zk_final_price'];
                 $commission_rate = $coupon['commission_rate'];
                 $coupon_click_url= $coupon['coupon_click_url'];
-                $arr = array();
                 preg_match_all('/\d+/',$couponInfo,$arr);
                 $tpwd = $coupon['tpwd'];
-                $retMsg = sprintf($this->message,$title,$commission_rate,$arr[1],"0",$coupon_click_url,$tpwd);
+                $retMsg = sprintf($this->message,$title,$zk_final_price,$arr[1],"0",$coupon_click_url,$tpwd);
                 log_message(INFO,"retMsg:" . $retMsg);
                 $this->wechat->text ( $retMsg )->reply ();
             break;
