@@ -1,10 +1,12 @@
 <?php
 defined ( 'BASEPATH' ) or exit ( 'No direct script access allowed' );
 class Weixin extends CI_Controller {
-	private $wechat;
+    private $wechat;
+    private $message = "%s\n【原价】: %s元\n【内部优惠券】: %s元\n【券后价】: %s元\n【浏览器下单】:%s\n【淘口令下单】: 复制这条信息，打开→手机淘宝领取优惠券%s";
 	public function __construct() {
 		parent::__construct ();
-		$this->wechat = new CI_Wechat();
+        $this->wechat = new CI_Wechat();
+        $this->load->model('api/api_model');
 	}
 	public function index() {
 		// $this->output->enable_profiler(TRUE);
@@ -15,10 +17,13 @@ class Weixin extends CI_Controller {
         // }
         $type = $this->wechat->getRev()->getRevType ();
 		log_message ( 'info', 'type:' . $type );
-		log_message ( 'info', 'rev:' . json_encode ( $this->wechat->getRevData () ) );
+        log_message ( 'info', 'rev:' . json_encode ( $this->wechat->getRevData () ) );
+        $msg = $this->wechat->getRevData();
+        log_message(INFRO,"msg:text:" . $msg->Content);
+        
 		switch ($type) {
 			case Wechat::MSGTYPE_TEXT :
-				$this->wechat->text ( "感谢您的关注,我们会给您更好的服务,http://shop.php9.cn 随便逛逛吧！!!更多功能完善中！" )->reply ();
+                $this->msgHandler($msg);
 				exit ();
 				break;
 			case Wechat::MSGTYPE_EVENT :
@@ -33,15 +38,49 @@ class Weixin extends CI_Controller {
 			default :
 				$this->wechat->text ( "help info" )->reply ();
 		}
-	}
+    }
+    private function msgHandler($msg){
+        $code = $msg->Content;
+        switch($code){
+            case 1:
+                $coupon = $this->randomCoupon();
+                $title = $coupon['title'];
+                $couponInfo = $coupon['coupon_info'];
+                $zk_final_price = $coupon['zk_final_price'];
+                $commission_rate = $coupon['commission_rate'];
+                $coupon_click_url= $coupon['coupon_click_url'];
+                $arr = array();
+                preg_match_all('/\d+/',$couponInfo,$arr);
+                $tpwd = $coupon['tpwd'];
+
+                $retMsg = sprintf($this->message,$title,$commission_rate,$arr[1],"0",$coupon_click_url,$tpwd);
+            break;
+            case 2:
+
+            break;
+            default:
+                $this->wechat->text ( "感谢您的关注,我们会给您更好的服务,http://shop.php9.cn 随便逛逛吧！!!更多功能完善中！" )->reply ();
+        }
+    }
 	private function event($event) {
 		switch ($event) {
 			case Wechat::EVENT_SUBSCRIBE :
-				$this->wechat->text ( "感谢您的关注,我们会给您更好的服务,http://shop.php9.cn 随便逛逛吧！" )->reply ();
+				$this->wechat->text ( "感谢您的关注,我们会给您更好的服务\n回复:1 随机获取一个优惠券\n 2 进入搜索模式\n http://shop.php9.cn 随便逛逛吧！" )->reply ();
 				exit ();
 				break;
 		}
-	}
+    }
+    private function randomCoupon(){
+        $words = array(
+            "女装",
+            "男装",
+            "童装"
+        );
+        $word = $words[mt_rand(0,count($words) - 1)];
+        $pangeNo = mt_rand(1,20);
+        $list =  $this->api_model->get_coupon($word,20,$pageNo);
+        return $list[mt_rand(0,count($list) - 1)];
+    }
 	private function event_key($key) {
 		switch ($key) {
 			case "TANGTANG_01" :
