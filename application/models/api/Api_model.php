@@ -26,12 +26,12 @@ class Api_model extends MY_Model {
     }
     public function get_favorites_info($favorites_id,$unid = "weixin",$pageSize = 20,$pageNo = 1,$platform = 2){
         $req = new TbkUatmFavoritesItemGetRequest();
-        $req->setPlatform($platform);
-        $req->setPageSize($pageSize);
-        $req->setAdzoneId($this->adzoneId);
-        $req->setUnid($unid);
-        $req->setFavoritesId($favorites_id);
-        $req->setPageNo($pageNo);
+        $req->setPlatform($platform."");
+        $req->setPageSize($pageSize."");
+        $req->setAdzoneId($this->adzoneId."");
+        $req->setUnid($unid."");
+        $req->setFavoritesId($favorites_id."");
+        $req->setPageNo($pageNo."");
         $req->setFields("num_iid,title,pict_url,small_images,reserve_price,zk_final_price,user_type,provcity,item_url,seller_id,volume,nick,shop_title,zk_final_price_wap,event_start_time,event_end_time,tk_rate,status,type,coupon_click_url,coupon_end_time,coupon_info,coupon_start_time,coupon_total_count,coupon_remain_count");
         $resp = $this->tao_client->execute($req);
         log_message(ERROR,json_encode($resp));
@@ -44,10 +44,10 @@ class Api_model extends MY_Model {
      */
     public function get_favorites($pageSize = 20,$pageNo = 1,$type = -1){
         $req = new TbkUatmFavoritesGetRequest;
-        $req->setPageNo($pageNo);
-        $req->setPageSize($pageSize);
+        $req->setPageNo($pageNo."");
+        $req->setPageSize($pageSize."");
         $req->setFields("favorites_title,favorites_id,type");
-        $req->setType($type);
+        $req->setType($type."");
         $resp = $this->tao_client->execute($req);
         log_message(ERROR,json_encode($resp));
         $item_list = array();
@@ -94,9 +94,9 @@ class Api_model extends MY_Model {
     public function get_tpwd($text,$url,$logo = "",$user_id = "",$ext = ""){
         $req = new TbkTpwdCreateRequest;
         if($user_id != ""){
-            $req->setUserId($user_id);
+            $req->setUserId($user_id."";
         }
-        $req->setText($text);
+        $req->setText($text."");
         $req->setUrl($url);
         if($logo != ""){
             $req->setLogo($logo);
