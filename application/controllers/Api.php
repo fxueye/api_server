@@ -41,7 +41,7 @@ class Api extends MY_Controller {
             'list' => $list,
             'total' => count($list),
         );
-        $this->set = $ret_data;
+        $this->ret = $ret_data;
     }
     function tpwd($title,$url){
         $title =  $this->get_post('title');
