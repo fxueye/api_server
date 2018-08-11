@@ -51,6 +51,7 @@ class Weixin extends CI_Controller {
                 $commission_rate = $coupon['commission_rate'];
                 $coupon_click_url= $coupon['coupon_click_url'];
                 preg_match_all('/\d+/',$couponInfo,$arr);
+                log_message(INFO,"msg:text:" . json_encode($arr));
                 $tpwd = $coupon['tpwd'];
                 $original_price = ((float)$zk_final_price + (float)$arr[1])."";
                 $retMsg = sprintf($this->message,$title,$original_price,$arr[1],$zk_final_price,$tpwd);
