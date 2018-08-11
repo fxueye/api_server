@@ -21,8 +21,8 @@ class Api extends MY_Controller {
         
         // $ret = $this->api_model->get_coupon_info("571659414649");
 
-        $ret = $this->api_model->get_favorites();
-        
+        $ret = $this->api_model->get_favorites(20,1,-1);
+
         echo json_encode($ret);
     }
 
