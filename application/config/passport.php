@@ -19,7 +19,7 @@ $config ['wechat'] = array (
     'encodingaeskey' => getenv("WEIXIN_ENCODINGAESKEY"), // 填写加密用的EncodingAESKey
     'appid' => getenv("WEIXIN_APPID"), // 填写高级调用功能的app id, 请在微信开发模式后台查询
     'appsecret' => getenv("WEIXIN_APPSECRET")
-) // 填写高级调用功能的密钥
+); // 填写高级调用功能的密钥
 
 // $config['app_key'] = "aaaaaaaaaaaaaaaa";
 // $config['app_iv'] = "aaaaaaaaaaaaaaaa";
