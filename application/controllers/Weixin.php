@@ -9,11 +9,11 @@ class Weixin extends CI_Controller {
 	public function index() {
 		$this->output->enable_profiler(TRUE);
 		$wechat->valid ();
-        $type = $this->wechat->getRev()->getRevType ();
         $b = true;
         if($b){
             return;
         }
+        $type = $this->wechat->getRev()->getRevType ();
 		log_message ( 'info', 'type:' . $type );
 		log_message ( 'info', 'rev:' . json_encode ( $this->wechat->getRevData () ) );
 		switch ($type) {
