@@ -4,7 +4,7 @@ class Weixin extends CI_Controller {
 	private $wechat;
 	public function __construct() {
 		parent::__construct ();
-		$this->wechat = new CI_Wechat ();
+		$this->wechat = new CI_Wechat();
 	}
 	public function index() {
 // 		$this->output->enable_profiler(TRUE);
