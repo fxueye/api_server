@@ -17,11 +17,15 @@ class Api extends MY_Controller {
         $this->load->model('api/api_model');
     }
     function index(){
-        $ret = $this->api_model->get_coupon("女装",20,1,2);
+        // $ret = $this->api_model->get_coupon("女装",20,1,2);
         
         // $ret = $this->api_model->get_coupon_info("571659414649");
+
+        $ret = $this->api_model->get_favorites();
+        
         echo json_encode($ret);
     }
+
     function coupon(){
         $w = $this->get_post('w');
         $pageSize = $this->get_post('pageSize');

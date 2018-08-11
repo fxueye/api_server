@@ -24,6 +24,70 @@ class Api_model extends MY_Model {
         $this->tao_client->secretKey = $tao_app_secret;
 
     }
+    public function get_favorites_info($favorites_id,$unid = "weixin",$pageSize = 20,$pageNo = 1,$platform = 2){
+        $req = new TbkUatmFavoritesItemGetRequest();
+        $req->setPlatform($platform);
+        $req->setPageSize($pageSize);
+        $req->setAdzoneId($this->adzoneId);
+        $req->setUnid($unid);
+        $req->setFavoritesId($favorites_id);
+        $req->setPageNo($pageNo);
+        $req->setFields("num_iid,title,pict_url,small_images,reserve_price,zk_final_price,user_type,provcity,item_url,seller_id,volume,nick,shop_title,zk_final_price_wap,event_start_time,event_end_time,tk_rate,status,type,coupon_click_url,coupon_end_time,coupon_info,coupon_start_time,coupon_total_count,coupon_remain_count");
+        $resp = $this->tao_client->execute($req);
+        log_message(ERROR,json_encode($resp));
+    }
+    /**
+    * page_no	Number	false	1	第几页，从1开始计数
+    *page_size	Number	false	20	默认20，页大小，即每一页的活动个数
+    *fields	String	true	favorites_title,favorites_id,type	需要返回的字段列表，不能为空，字段名之间使用逗号分隔
+    *type	Number	false	1	默认值-1；选品库类型，1：普通选品组，2：高佣选品组，-1，同时输出所有类型的选品组
+     */
+    public function get_favorites($pageSize = 20,$pageNo = 1,$type = 2){
+        $req = new TbkUatmFavoritesGetRequest;
+        $req->setPageNo($pageNo);
+        $req->setPageSize($pageSize);
+        $req->setFields("favorites_title,favorites_id,type");
+        $req->setType($type);
+        $resp = $this->tao_client->execute($req);
+        $item_list = array();
+        if(isset($resp->results)){
+            $items= $resp->results->tbk_favorites;
+            for($i = 0; $i < count($items); $i++){
+                $item = $items[$i];
+                $data = array(
+                    "type"=>$item->type,
+                    "favorites_id"=>$item->favorites_id,
+                    "favorites_title"=>$item->favorites_title
+                );
+                $item_list[] = $data;
+            }
+        }
+        return $item_list;
+    }
+    public function get_spread_url($url){
+        $req = new TbkSpreadGetRequest();
+        $requests = new TbkSpreadRequest();
+        $requests->url=$url;
+        $req->setRequests(json_encode($requests));
+        $resp = $this->tao_client->execute($req);
+        $item_list = array();
+        if(isset($resp->results)){
+            if($resp->total_results > 0){
+                $items =  $resp->results->tbk_spread;
+                for($i = 0; $i < count($items);$i++){
+                    $item = $items[$i];
+                    $err_msg = $item->err_msg;
+                    if($err_msg == "OK"){
+                        $data = array(
+                            "content" => $item->content;
+                        );
+                        $item_list[] = $data;
+                    }
+                }
+            }
+        }
+        return $item_list;
+    }
     public function get_tpwd($text,$url,$logo = "",$user_id = "",$ext = ""){
         $req = new TbkTpwdCreateRequest;
         if($user_id != ""){
@@ -51,7 +115,7 @@ class Api_model extends MY_Model {
         $resp = $this->tao_client->execute($req);
         log_message(ERROR,json_encode($resp));
     }
-    public function get_coupon($w,$pageSize,$pageNo,$platform){
+    public function get_coupon($w,$pageSize,$pageNo,$platform = 2){
         $req = new TbkDgItemCouponGetRequest();
         $req->setAdzoneId($this->adzoneId);
         $req->setPlatform($platform."");
