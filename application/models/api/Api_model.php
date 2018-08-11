@@ -118,13 +118,13 @@ class Api_model extends MY_Model {
         $resp = $this->tao_client->execute($req);
         log_message(ERROR,json_encode($resp));
     }
-    public function get_coupon($w,$pageSize,$pageNo,$platform = 2){
+    public function get_coupon($w,$pageSize = 20,$pageNo = 1,$platform = 2){
         $req = new TbkDgItemCouponGetRequest();
-        $req->setAdzoneId($this->adzoneId);
+        $req->setAdzoneId($this->adzoneId."");
         $req->setPlatform($platform."");
         $req->setPageSize($pageSize."");
         $req->setQ($w);
-        $req->setPageNo($pageNo+"");
+        $req->setPageNo($pageNo."");
         $resp = $this->tao_client->execute($req);
         log_message(ERROR,json_encode($resp));
         $item_list = array();
