@@ -34,7 +34,6 @@ class Api_model extends MY_Model {
         $req->setPageNo($pageNo."");
         $req->setFields("num_iid,title,pict_url,small_images,reserve_price,zk_final_price,user_type,provcity,item_url,seller_id,volume,nick,shop_title,zk_final_price_wap,event_start_time,event_end_time,tk_rate,status,type,coupon_click_url,coupon_end_time,coupon_info,coupon_start_time,coupon_total_count,coupon_remain_count");
         $resp = $this->tao_client->execute($req);
-        log_message(ERROR,json_encode($resp));
     }
     /**
     *page_no	Number	false	1	第几页，从1开始计数
@@ -116,7 +115,6 @@ class Api_model extends MY_Model {
             $req->setActivityId($activityId."");
         }
         $resp = $this->tao_client->execute($req);
-        log_message(ERROR,json_encode($resp));
     }
     public function get_coupon($w,$pageSize = 20,$pageNo = 1,$platform = 2){
         $req = new TbkDgItemCouponGetRequest();
@@ -126,7 +124,6 @@ class Api_model extends MY_Model {
         $req->setQ($w);
         $req->setPageNo($pageNo."");
         $resp = $this->tao_client->execute($req);
-        log_message(ERROR,json_encode($resp));
         $item_list = array();
         if(isset($resp->results)){
             if($resp->total_results > 0){
