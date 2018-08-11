@@ -79,7 +79,7 @@ class Api_model extends MY_Model {
                     $err_msg = $item->err_msg;
                     if($err_msg == "OK"){
                         $data = array(
-                            "content" => $item->content;
+                            "content" => $item->content
                         );
                         $item_list[] = $data;
                     }
