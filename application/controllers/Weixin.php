@@ -19,7 +19,7 @@ class Weixin extends CI_Controller {
 		log_message ( 'info', 'type:' . $type );
         log_message ( 'info', 'rev:' . json_encode ( $this->wechat->getRevData () ) );
         $msg = $this->wechat->getRevData();
-        log_message(INFRO,"msg:text:" . $msg->Content);
+        log_message(INFO,"msg:text:" . $msg->Content);
         
 		switch ($type) {
 			case Wechat::MSGTYPE_TEXT :
@@ -41,6 +41,7 @@ class Weixin extends CI_Controller {
     }
     private function msgHandler($msg){
         $code = $msg->Content;
+
         switch($code){
             case "1":
                 $coupon = $this->randomCoupon();
