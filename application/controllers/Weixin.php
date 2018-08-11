@@ -53,8 +53,9 @@ class Weixin extends CI_Controller {
                 $arr = array();
                 preg_match_all('/\d+/',$couponInfo,$arr);
                 $tpwd = $coupon['tpwd'];
-
                 $retMsg = sprintf($this->message,$title,$commission_rate,$arr[1],"0",$coupon_click_url,$tpwd);
+                log_message(INFO,"retMsg:" . $retMsg);
+                $this->wechat->text ( $retMsg )->reply ();
             break;
             case "2":
 
