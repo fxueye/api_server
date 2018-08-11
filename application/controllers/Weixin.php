@@ -54,7 +54,7 @@ class Weixin extends CI_Controller {
                 log_message(INFO,"msg:text:" . json_encode($arr));
                 $tpwd = $coupon['tpwd'];
                 $original_price = ((float)$zk_final_price + (float)$arr[0][1])."";
-                $retMsg = sprintf($this->message,$title,$original_price,$arr[1],$zk_final_price,$tpwd);
+                $retMsg = sprintf($this->message,$title,$original_price,$arr[0][1],$zk_final_price,$tpwd);
                 log_message(INFO,"retMsg:" . $retMsg);
                 $this->wechat->text ( $retMsg )->reply ();
             break;
