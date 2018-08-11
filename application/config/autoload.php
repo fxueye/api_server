@@ -59,7 +59,7 @@ $autoload['packages'] = array();
 |	$autoload['libraries'] = array('user_agent' => 'ua');
 */
 // $autoload['libraries'] = array('session','database','error');
-$autoload['libraries'] = array('session','error');
+$autoload['libraries'] = array('session','error'，'CI_Wechat');
 
 /*
 | -------------------------------------------------------------------
