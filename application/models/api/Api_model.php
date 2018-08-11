@@ -24,6 +24,24 @@ class Api_model extends MY_Model {
         $this->tao_client->secretKey = $tao_app_secret;
 
     }
+    public function get_tpwd($text,$url,$logo = "",$user_id = "",$ext = ""){
+        $req = new TbkTpwdCreateRequest;
+        if($user_id != ""){
+            $req->setUserId($user_id);
+        }
+        $req->setText($text);
+        $req->setUrl($url);
+        if($logo != ""){
+            $req->setLogo($logo);
+        }
+        if($ext != ""){
+            $req->setExt($ext);
+        }else{
+            $req->setExt("{}");
+        }
+        $resp = $this->tao_client->execute($req);
+        log_message(ERROR,json_encode($resp));
+    }
     public function get_coupon_info($itemId,$activityId=""){
         $req = new TbkCouponGetRequest();
         $req->setItemId($itemId."");
