@@ -49,6 +49,7 @@ class Api_model extends MY_Model {
         $req->setFields("favorites_title,favorites_id,type");
         $req->setType($type);
         $resp = $this->tao_client->execute($req);
+        log_message(ERROR,json_encode($resp));
         $item_list = array();
         if(isset($resp->results)){
             $items= $resp->results->tbk_favorites;
