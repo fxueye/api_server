@@ -8,7 +8,7 @@ class Weixin extends CI_Controller {
 	}
 	public function index() {
 		$this->output->enable_profiler(TRUE);
-		$wechat->valid ();
+		$this->wechat->valid ();
         $b = true;
         if($b){
             return;
