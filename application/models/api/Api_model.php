@@ -135,7 +135,6 @@ class Api_model extends MY_Model {
                 $items = $resp->results->tbk_coupon;
                 for($y = 0; $y < count($items);$y ++){
                     $item = $items[$y];
-                    $gcat_id=0;
                     $small_images = '';
                     if (isset($item->small_images)){
                         $small_images = json_encode($item->small_images->string);
@@ -171,7 +170,6 @@ class Api_model extends MY_Model {
                     $coupon_click_url = $item->coupon_click_url;
                     $tpwd = "";
                     $data = array(
-                        'gcat_id' => $gcat_id,
                         'small_images' => $small_images,
                         'title'=>$title,
                         'shop_title' =>$shop_title,
