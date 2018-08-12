@@ -1,9 +1,9 @@
 <?php
 defined ( 'BASEPATH' ) or exit ( 'No direct script access allowed' );
 class Weixin extends CI_Controller {
-	private static RANDOM_COUPON_MODEL = "1";
-	private static SEARCH_MODEL = "2";
-	private static OUT_SEARCH_MODEL = "3";
+	const RANDOM_COUPON_MODEL = "1";
+	const SEARCH_MODEL = "2";
+	const OUT_SEARCH_MODEL = "3";
 	private $comd = "回复:\n 1 随机获取一个优惠券\n 2 进入搜索模式\n 3 退出搜索模式";
     private $wechat;
     private $message = "%s\n【原价】: %s元\n【内部优惠券】: %s元\n【券后价】: %s元\n【淘口令下单】: 复制这条信息，打开→手机淘宝领取优惠券%s";
