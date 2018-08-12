@@ -47,8 +47,8 @@ class Weixin extends CI_Controller {
 		$user = $msg['FromUserName'];
 		log_message ( 'info', 'user:' . $user );
 		$model = $this->getModel($user);
-		$code = $msg['Content'];
 		log_message ( 'info', 'model:' . $model );
+		$code = $msg['Content'];
 		if($model == Weixin::SEARCH_MODEL){
 			$this->sendCoupon($code);
 			return;
@@ -84,7 +84,7 @@ class Weixin extends CI_Controller {
 		$this->wechat->text ( $retMsg )->reply ();
 	}
 	private function setModel($user,$code){
-		$this->set_cache($user,$code);
+		$this->set_cache($user,$code,3600 * 24);
 	}
 	private function getModel($user){
 		return $this->get_cache($user);
