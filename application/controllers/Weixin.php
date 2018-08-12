@@ -3,6 +3,8 @@ defined ( 'BASEPATH' ) or exit ( 'No direct script access allowed' );
 class Weixin extends CI_Controller {
 	private static RANDOM_COUPON_MODEL = "1";
 	private static SEARCH_MODEL = "2";
+	private static OUT_SEARCH_MODEL = "3";
+	private $comd = "回复:\n 1 随机获取一个优惠券\n 2 进入搜索模式\n 3 退出搜索模式";
     private $wechat;
     private $message = "%s\n【原价】: %s元\n【内部优惠券】: %s元\n【券后价】: %s元\n【淘口令下单】: 复制这条信息，打开→手机淘宝领取优惠券%s";
 	public function __construct() {
@@ -55,8 +57,13 @@ class Weixin extends CI_Controller {
             break;
             case self::SEARCH_MODEL :
 				$this->setModel($user,$code);
-				$this->wechat->text ( "进入搜索模式请输入搜索词:" )->reply ();
-            break;
+				$this->wechat->text( "进入搜索模式\n请输入搜索词:" )->reply();
+			break;
+			case self::OUT_SEARCH_MODEL :
+				$this->setModel($user,$code);
+				$sendMsg = sprintf( "退出搜索模式:\n %s",$this->comd);
+				$this->wechat->text($sendMsg)->reply();
+			break;
             default:
                 $this->wechat->text ( "感谢您的关注,我们会给您更好的服务,http://shop.php9.cn 随便逛逛吧！!!更多功能完善中！" )->reply ();
         }
@@ -83,7 +90,8 @@ class Weixin extends CI_Controller {
 	private function event($event) {
 		switch ($event) {
 			case Wechat::EVENT_SUBSCRIBE :
-				$this->wechat->text ( "感谢您的关注,我们会给您更好的服务\n回复:\n 1 随机获取一个优惠券\n 2 进入搜索模式\n http://shop.php9.cn 随便逛逛吧！" )->reply ();
+				$msg = sprintf("感谢您的关注,我们会给您更好的服务\n%s http://shop.php9.cn 随便逛逛吧！",$this->comd);
+				$this->wechat->text ($msg)->reply ();
 				exit ();
 				break;
 		}
