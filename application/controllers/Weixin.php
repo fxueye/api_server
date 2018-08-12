@@ -110,7 +110,7 @@ class Weixin extends MY_Controller {
 		}else{
 			$word = $words[mt_rand(0,count($words) - 1)];
 		}
-        $pangeNo = mt_rand(1,20);
+        $pageNo = mt_rand(1,20);
         $list =  $this->api_model->get_coupon($word,20,$pageNo);
         return $list[mt_rand(0,count($list) - 1)];
     }
