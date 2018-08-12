@@ -47,19 +47,19 @@ class Weixin extends CI_Controller {
 		$user = $msg['FromUserName'];
 		$model = $this->getModel($user);
 		$code = $msg['Content'];
-		if($model == self::SEARCH_MODEL){
+		if($model == Weixin::SEARCH_MODEL){
 			$this->sendCoupon($code);
 			return;
 		}
         switch($code){
-            case self::RANDOM_COUPON_MODEL :
+            case Weixin::RANDOM_COUPON_MODEL:
 				$this->sendCoupon();
             break;
-            case self::SEARCH_MODEL :
+            case Weixin::SEARCH_MODEL :
 				$this->setModel($user,$code);
 				$this->wechat->text( "进入搜索模式\n请输入搜索词:" )->reply();
 			break;
-			case self::OUT_SEARCH_MODEL :
+			case Weixin::OUT_SEARCH_MODEL :
 				$this->setModel($user,$code);
 				$sendMsg = sprintf( "退出搜索模式:\n %s",$this->comd);
 				$this->wechat->text($sendMsg)->reply();
