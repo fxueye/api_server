@@ -45,6 +45,7 @@ class Weixin extends CI_Controller {
     }
     private function msgHandler($msg){
 		$user = $msg['FromUserName'];
+		log_message ( 'info', 'user:' . $user );
 		$model = $this->getModel($user);
 		$code = $msg['Content'];
 		log_message ( 'info', 'model:' . $model );
