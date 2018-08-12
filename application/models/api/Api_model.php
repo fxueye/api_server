@@ -164,7 +164,7 @@ class Api_model extends MY_Model {
     
                     $item_description = $item->item_description;
                     $coupon_click_url = $item->coupon_click_url;
-                    $tpwd = $this->get_tpwd($title,$coupon_click_url);
+                    $tpwd = "";
                     $data = array(
                         'gcat_id' => $gcat_id,
                         'small_images' => $small_images,

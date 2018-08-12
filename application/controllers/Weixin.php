@@ -111,8 +111,17 @@ class Weixin extends MY_Controller {
 			$word = $words[mt_rand(0,count($words) - 1)];
 		}
         $pageNo = mt_rand(1,20);
-        $list =  $this->api_model->get_coupon($word,20,$pageNo);
-        return $list[mt_rand(0,count($list) - 1)];
+		$list =  $this->api_model->get_coupon($word,20,$pageNo);
+		$coupon = $list[mt_rand(0,count($list) - 1)];
+		$small_images = $coupon['small_images'];
+		$logo = "";
+		if(count($small_images) > 0){
+			$logo = $small_images[0];
+		}
+		$title = $coupon['title'];
+		$coupon_click_url = $coupon['coupon_click_url'];
+		$coupon['tpwd'] = $this->api_model->get_tpwd($title,$coupon_click_url,$logo);
+        return $coupon;
     }
 	private function event_key($key) {
 		switch ($key) {
