@@ -117,6 +117,11 @@ class Api_model extends MY_Model {
         $resp = $this->tao_client->execute($req);
     }
     public function get_coupon($w,$pageSize = 20,$pageNo = 1,$platform = 2){
+        $cache_key = md5(sprintf('search_coupon_%s_%d_%s',date('YmdH'),$pageNo,md5($w)));
+        $cache_data = $this->get_cache($cache_key);
+        if($cache_data != false){
+            return $cache_data;
+        }
         $req = new TbkDgItemCouponGetRequest();
         $req->setAdzoneId($this->adzoneId."");
         $req->setPlatform($platform."");
@@ -191,6 +196,10 @@ class Api_model extends MY_Model {
                     );
                     $item_list[] = $data;
                 }
+            }
+            if(count($item_list) > 0){
+                $this->set_cache($cache_key,$item_list,60*60);
+                return $item_list;
             }
             return $item_list;
         }
