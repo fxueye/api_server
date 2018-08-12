@@ -26,7 +26,7 @@ class Api extends MY_Controller {
 
         // echo json_encode($ret);
         $this->set_cache("key","1",3600 * 24);
-        $key = $this->get_cache("key");
+        $key = $this->get_cache("key2");
         log_message ( 'info', 'key:' . $key );
     }
 
