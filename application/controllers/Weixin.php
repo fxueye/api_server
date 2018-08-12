@@ -80,8 +80,8 @@ class Weixin extends MY_Controller {
 		$coupon_click_url= $coupon['coupon_click_url'];
 		$tpwd = $coupon['tpwd'];
 		preg_match_all('/\d+/',$couponInfo,$arr);
-		$original_price = ((float)$zk_final_price - (float)$arr[0][1])."";
-		$retMsg = sprintf($this->message,$title,$original_price,$arr[0][1],$zk_final_price,$tpwd);
+		$now_price = ((float)$zk_final_price - (float)$arr[0][1])."";
+		$retMsg = sprintf($this->message,$title,$zk_final_price,$arr[0][1],$now_price,$tpwd);
 		$this->wechat->text ( $retMsg )->reply ();
 	}
 	private function setModel($user,$code){
