@@ -49,7 +49,7 @@ class Weixin extends MY_Controller {
 		$model = $this->getModel($user);
 		log_message ( 'info', 'model:' . $model );
 		$code = $msg['Content'];
-		if($model == Weixin::SEARCH_MODEL && $code != Weixin:OUT_SEARCH_MODEL){
+		if($model == Weixin::SEARCH_MODEL && $code != Weixin::OUT_SEARCH_MODEL){
 			$this->sendCoupon($code);
 			return;
 		}
