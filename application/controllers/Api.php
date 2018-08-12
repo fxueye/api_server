@@ -17,13 +17,17 @@ class Api extends MY_Controller {
         $this->load->model('api/api_model');
     }
     function index(){
+
         // $ret = $this->api_model->get_coupon("女装",20,1,2);
         
         // $ret = $this->api_model->get_coupon_info("571659414649");
 
-        $ret = $this->api_model->get_favorites(20,1,-1);
+        // $ret = $this->api_model->get_favorites(20,1,-1);
 
-        echo json_encode($ret);
+        // echo json_encode($ret);
+        $this->set_cache("key","1",3600 * 24);
+        $key = $this->get_cache("key");
+        log_message ( 'info', 'key:' . $key );
     }
 
     function coupon(){
