@@ -81,7 +81,7 @@ class Api extends MY_Controller {
         $list =  $this->api_model->get_coupon($w,$pageSize,$pageNo,$platform);
 
         $coupon = $list[mt_rand(0,count($list) - 1)];
-		$small_images = $coupon['small_images'];
+		$small_images = json_decode($coupon['small_images'],true);
 		$logo = "";
 		if(count($small_images) > 0){
 			$logo = $small_images[0];
