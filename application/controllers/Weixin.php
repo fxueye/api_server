@@ -6,7 +6,8 @@ class Weixin extends MY_Controller {
 	const OUT_SEARCH_MODEL = "3";
 	private $comd = "回复:\n 1 随机获取一个优惠券\n 2 进入搜索模式\n 3 退出搜索模式";
     private $wechat;
-    private $message = "%s\n【原价】: %s元\n【内部优惠券】: %s元\n【券后价】: %s元\n【淘口令下单】: 复制这条信息，打开→手机淘宝领取优惠券%s";
+	private $message = "%s\n【原价】: %s元\n【内部优惠券】: %s元\n【券后价】: %s元\n【淘口令下单】: 复制这条信息，打开→手机淘宝领取优惠券%s";
+	
 	public function __construct() {
 		parent::__construct ();
         $this->wechat = new CI_Wechat();

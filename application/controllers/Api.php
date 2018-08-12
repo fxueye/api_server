@@ -85,7 +85,8 @@ class Api extends MY_Controller {
 		$logo = "";
 		if(count($small_images) > 0){
 			$logo = $small_images[0];
-		}
+        }
+        log_message(INFO,"logo:".$logo)
 		$title = $coupon['title'];
 		$coupon_click_url = $coupon['coupon_click_url'];
         $coupon['tpwd'] = $this->api_model->get_tpwd($title,$coupon_click_url,$logo);
