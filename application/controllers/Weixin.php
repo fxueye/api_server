@@ -1,6 +1,6 @@
 <?php
 defined ( 'BASEPATH' ) or exit ( 'No direct script access allowed' );
-class Weixin extends CI_Controller {
+class Weixin extends MY_Controller {
 	const RANDOM_COUPON_MODEL = "1";
 	const SEARCH_MODEL = "2";
 	const OUT_SEARCH_MODEL = "3";
