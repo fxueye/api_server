@@ -114,11 +114,11 @@ class Weixin extends MY_Controller {
         $pageNo = mt_rand(1,20);
 		$list =  $this->api_model->get_coupon($word,20,$pageNo);
 		$coupon = $list[mt_rand(0,count($list) - 1)];
-		$small_images = $coupon['small_images'];
+		$small_images = json_decode($coupon['small_images'],true);
 		$logo = "";
 		if(count($small_images) > 0){
 			$logo = $small_images[0];
-		}
+        }
 		$title = $coupon['title'];
 		$coupon_click_url = $coupon['coupon_click_url'];
 		$coupon['tpwd'] = $this->api_model->get_tpwd($title,$coupon_click_url,$logo);
