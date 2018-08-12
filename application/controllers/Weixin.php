@@ -47,12 +47,13 @@ class Weixin extends CI_Controller {
 		$user = $msg['FromUserName'];
 		$model = $this->getModel($user);
 		$code = $msg['Content'];
+		log_message ( 'info', 'model:' . $model );
 		if($model == Weixin::SEARCH_MODEL){
 			$this->sendCoupon($code);
 			return;
 		}
         switch($code){
-            case Weixin::RANDOM_COUPON_MODEL:
+            case Weixin::RANDOM_COUPON_MODEL :
 				$this->sendCoupon();
             break;
             case Weixin::SEARCH_MODEL :
