@@ -29,27 +29,67 @@ class Api extends MY_Controller {
         $key = $this->get_cache("key2");
         log_message ( 'info', 'key:' . $key );
     }
-
+    function randomCoupon($w=""){
+        $words = array(
+            "女装",
+            "男装",
+			"童装",
+			"情人节"
+		);
+		if($w != null){
+			$word = $w;
+		}else{
+			$word = $words[mt_rand(0,count($words) - 1)];
+		}
+        $pageNo = mt_rand(1,20);
+		$list =  $this->api_model->get_coupon($word,20,$pageNo);
+		$coupon = $list[mt_rand(0,count($list) - 1)];
+		$small_images = $coupon['small_images'];
+		$logo = "";
+		if(count($small_images) > 0){
+			$logo = $small_images[0];
+		}
+		$title = $coupon['title'];
+		$coupon_click_url = $coupon['coupon_click_url'];
+		$coupon['tpwd'] = $this->api_model->get_tpwd($title,$coupon_click_url,$logo);
+        return $coupon;
+    }
     function coupon(){
+        $words = array(
+            "女装",
+            "男装",
+			"童装",
+			"情人节"
+        );
+        
         $w = $this->get_post('w');
+        if($w == ""){
+            $w = $words[mt_rand(0,count($words) - 1)];
+        }
         $pageSize = $this->get_post('pageSize');
         if($pageSize == ""){
             $pageSize = 20;
         }
         $pageNo = $this->get_post('pageNo');
         if($pageNo == ""){
-            $pageNo = 1;
+            $pageNo = mt_rand(1,20);
         }
         $platform = $this->get_post('platform');
         if($platform == ""){
             $platform = 2;
         }
         $list =  $this->api_model->get_coupon($w,$pageSize,$pageNo,$platform);
-        $ret_data = array(
-            'list' => $list,
-            'total' => count($list),
-        );
-        $this->ret = $ret_data;
+
+        $coupon = $list[mt_rand(0,count($list) - 1)];
+		$small_images = $coupon['small_images'];
+		$logo = "";
+		if(count($small_images) > 0){
+			$logo = $small_images[0];
+		}
+		$title = $coupon['title'];
+		$coupon_click_url = $coupon['coupon_click_url'];
+        $coupon['tpwd'] = $this->api_model->get_tpwd($title,$coupon_click_url,$logo);
+        $this->ret = $coupon;
     }
     function tpwd($title,$url){
         $title =  $this->get_post('title');
