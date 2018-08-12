@@ -19,7 +19,6 @@ class Weixin extends CI_Controller {
 		log_message ( 'info', 'type:' . $type );
         log_message ( 'info', 'rev:' . json_encode ( $this->wechat->getRevData () ) );
         $msg = $this->wechat->getRevData();
-        log_message(INFO,"msg:text:" . $msg['Content']);
         
 		switch ($type) {
 			case Wechat::MSGTYPE_TEXT :
@@ -50,12 +49,10 @@ class Weixin extends CI_Controller {
                 $zk_final_price = $coupon['zk_final_price'];
                 $commission_rate = $coupon['commission_rate'];
                 $coupon_click_url= $coupon['coupon_click_url'];
-                preg_match_all('/\d+/',$couponInfo,$arr);
-                log_message(INFO,"msg:text:" . json_encode($arr));
                 $tpwd = $coupon['tpwd'];
+				preg_match_all('/\d+/',$couponInfo,$arr);
                 $original_price = ((float)$zk_final_price + (float)$arr[0][1])."";
                 $retMsg = sprintf($this->message,$title,$original_price,$arr[0][1],$zk_final_price,$tpwd);
-                log_message(INFO,"retMsg:" . $retMsg);
                 $this->wechat->text ( $retMsg )->reply ();
             break;
             case "2":
@@ -68,7 +65,7 @@ class Weixin extends CI_Controller {
 	private function event($event) {
 		switch ($event) {
 			case Wechat::EVENT_SUBSCRIBE :
-				$this->wechat->text ( "感谢您的关注,我们会给您更好的服务\n回复:1 随机获取一个优惠券\n 2 进入搜索模式\n http://shop.php9.cn 随便逛逛吧！" )->reply ();
+				$this->wechat->text ( "感谢您的关注,我们会给您更好的服务\n回复:\n 1 随机获取一个优惠券\n 2 进入搜索模式\n http://shop.php9.cn 随便逛逛吧！" )->reply ();
 				exit ();
 				break;
 		}
@@ -77,7 +74,8 @@ class Weixin extends CI_Controller {
         $words = array(
             "女装",
             "男装",
-            "童装"
+			"童装",
+			"情人节"
         );
         $word = $words[mt_rand(0,count($words) - 1)];
         $pangeNo = mt_rand(1,20);
