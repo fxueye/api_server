@@ -1,6 +1,8 @@
 <?php
 defined ( 'BASEPATH' ) or exit ( 'No direct script access allowed' );
 class Weixin extends CI_Controller {
+	private static RANDOM_COUPON_MODEL = "1";
+	private static SEARCH_MODEL = "2";
     private $wechat;
     private $message = "%s\n【原价】: %s元\n【内部优惠券】: %s元\n【券后价】: %s元\n【淘口令下单】: 复制这条信息，打开→手机淘宝领取优惠券%s";
 	public function __construct() {
@@ -18,7 +20,8 @@ class Weixin extends CI_Controller {
         $type = $this->wechat->getRev()->getRevType ();
 		log_message ( 'info', 'type:' . $type );
         log_message ( 'info', 'rev:' . json_encode ( $this->wechat->getRevData () ) );
-        $msg = $this->wechat->getRevData();
+		$msg = $this->wechat->getRevData();
+
         
 		switch ($type) {
 			case Wechat::MSGTYPE_TEXT :
@@ -39,29 +42,44 @@ class Weixin extends CI_Controller {
 		}
     }
     private function msgHandler($msg){
-        $code = $msg['Content'];
-
+		$user = $msg['FromUserName'];
+		$model = $this->getModel($user);
+		$code = $msg['Content'];
+		if($model == self::SEARCH_MODEL){
+			$this->sendCoupon($code);
+			return;
+		}
         switch($code){
-            case "1":
-                $coupon = $this->randomCoupon();
-                $title = $coupon['title'];
-                $couponInfo = $coupon['coupon_info'];
-                $zk_final_price = $coupon['zk_final_price'];
-                $commission_rate = $coupon['commission_rate'];
-                $coupon_click_url= $coupon['coupon_click_url'];
-                $tpwd = $coupon['tpwd'];
-				preg_match_all('/\d+/',$couponInfo,$arr);
-                $original_price = ((float)$zk_final_price + (float)$arr[0][1])."";
-                $retMsg = sprintf($this->message,$title,$original_price,$arr[0][1],$zk_final_price,$tpwd);
-                $this->wechat->text ( $retMsg )->reply ();
+            case self::RANDOM_COUPON_MODEL :
+				$this->sendCoupon();
             break;
-            case "2":
-
+            case self::SEARCH_MODEL :
+				$this->setModel($user,$code);
+				$this->wechat->text ( "进入搜索模式请输入搜索词:" )->reply ();
             break;
             default:
                 $this->wechat->text ( "感谢您的关注,我们会给您更好的服务,http://shop.php9.cn 随便逛逛吧！!!更多功能完善中！" )->reply ();
         }
-    }
+	}
+	private function sendCoupon($w = ""){
+		$coupon = $this->randomCoupon($w);
+		$title = $coupon['title'];
+		$couponInfo = $coupon['coupon_info'];
+		$zk_final_price = $coupon['zk_final_price'];
+		$commission_rate = $coupon['commission_rate'];
+		$coupon_click_url= $coupon['coupon_click_url'];
+		$tpwd = $coupon['tpwd'];
+		preg_match_all('/\d+/',$couponInfo,$arr);
+		$original_price = ((float)$zk_final_price + (float)$arr[0][1])."";
+		$retMsg = sprintf($this->message,$title,$original_price,$arr[0][1],$zk_final_price,$tpwd);
+		$this->wechat->text ( $retMsg )->reply ();
+	}
+	private function setModel($user,$code){
+		$this->set_cache($user,$code);
+	}
+	private function getModel($user){
+		return $this->get_cache($user);
+	}
 	private function event($event) {
 		switch ($event) {
 			case Wechat::EVENT_SUBSCRIBE :
@@ -70,14 +88,18 @@ class Weixin extends CI_Controller {
 				break;
 		}
     }
-    private function randomCoupon(){
+    private function randomCoupon($w=""){
         $words = array(
             "女装",
             "男装",
 			"童装",
 			"情人节"
-        );
-        $word = $words[mt_rand(0,count($words) - 1)];
+		);
+		if($w != null){
+			$word = $w;
+		}else{
+			$word = $words[mt_rand(0,count($words) - 1)];
+		}
         $pangeNo = mt_rand(1,20);
         $list =  $this->api_model->get_coupon($word,20,$pageNo);
         return $list[mt_rand(0,count($list) - 1)];
