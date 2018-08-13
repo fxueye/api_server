@@ -93,7 +93,7 @@ class Weixin extends MY_Controller {
 	private function event($event) {
 		switch ($event) {
 			case Wechat::EVENT_SUBSCRIBE :
-				$msg = sprintf("感谢您的关注,我们会给您更好的服务\n%s http://shop.php9.cn 随便逛逛吧！",$this->comd);
+				$msg = sprintf("感谢您的关注,我们会给您更好的服务\n%s \nhttp://shop.php9.cn 随便逛逛吧！",$this->comd);
 				$this->wechat->text ($msg)->reply ();
 				exit ();
 				break;
@@ -104,6 +104,7 @@ class Weixin extends MY_Controller {
             "女装",
             "男装",
 			"童装",
+			"母婴",
 			"情人节"
 		);
 		if($w != null){
