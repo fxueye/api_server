@@ -9,20 +9,35 @@ class Api_model extends MY_Model {
         parent::__construct(self::DB_KEY);
         date_default_timezone_set('Asia/Shanghai'); 
         set_time_limit(0);
-        $tao_app_key = get_env_config("tao_app_key");
-        $tao_app_secret = get_env_config("tao_app_secret");
-        $this->pid = get_env_config("tao_pid");
-        $strs = explode("_",$this->pid);
-        if(count($strs) == 4){
-            $this->adzoneId= $strs[3];
-        }
 
         $this->load->library("taobao_sdk/Autoloader");
         $this->tao_client = new TopClient();
         $this->tao_client->format = "json";
-        $this->tao_client->appkey = $tao_app_key;
-        $this->tao_client->secretKey = $tao_app_secret;
+        $this->set_taoke_param();
 
+    }
+    public function set_taoke_param($app_key = "",$app_secret = "",$tao_pid = ""){
+        $tao_app_key = get_env_config("tao_app_key");
+        $tao_app_secret = get_env_config("tao_app_secret");
+        if($tao_pid == ""){
+            $this->pid = get_env_config("tao_pid");
+        }else{
+            $this->pid = $tao_pid;
+        }
+        $strs = explode("_",$this->pid);
+        if(count($strs) == 4){
+            $this->adzoneId= $strs[3];
+        }
+        if($app_key == ""){
+            $this->tao_client->appkey = $tao_app_key;
+        }else{
+            $this->tao_client->appkey = $app_key;
+        }
+        if($app_secret == ""){
+            $this->tao_client->secretKey = $tao_app_secret;
+        }else{
+            $this->tao_client->secretKey = $app_secret;
+        }
     }
     public function get_favorites_info($favorites_id,$unid = "weixin",$pageSize = 20,$pageNo = 1,$platform = 2){
         $req = new TbkUatmFavoritesItemGetRequest();

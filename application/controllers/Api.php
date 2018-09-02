@@ -29,7 +29,7 @@ class Api extends MY_Controller {
         $key = $this->get_cache("key2");
         log_message ( 'info', 'key:' . $key );
     }
-    function randomCoupon($w=""){
+    function randomCoupon($w="",$app_key="",$app_secret="",$app_pid=""){
         $words = array(
             "女装",
             "男装",
@@ -42,6 +42,7 @@ class Api extends MY_Controller {
 			$word = $words[mt_rand(0,count($words) - 1)];
 		}
         $pageNo = mt_rand(1,20);
+        $this->api_model->set_taoke_param($app_key,$app_secret,$app_pid);
 		$list =  $this->api_model->get_coupon($word,20,$pageNo);
 		$coupon = $list[mt_rand(0,count($list) - 1)];
 		$small_images = json_decode($coupon['small_images'],true);
@@ -63,6 +64,11 @@ class Api extends MY_Controller {
         );
         
         $w = $this->get_post('w');
+        $app_key = $this->get_post("app_key");
+        $app_secret = $this->get_post("app_secret");
+        $app_pid = $this->get_post("app_pid");
+        $this->api_model->set_taoke_param($app_key,$app_secret,$app_pid);
+        
         if($w == ""){
             $w = $words[mt_rand(0,count($words) - 1)];
         }
