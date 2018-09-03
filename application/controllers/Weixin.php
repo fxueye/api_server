@@ -255,7 +255,7 @@ class Weixin extends MY_Controller {
 				"tag_id"=>2
 			),
 			"text"=>array(
-				"content":$coupon
+				"content"=>$coupon
 			),
 			"msgtype"=>"text"
 		);
