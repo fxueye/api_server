@@ -103,4 +103,5 @@ class Api extends MY_Controller {
         $url = $this->get_post('url');
         $this->ret = $this->api_model->get_tpwd($title,$url);
     }
+
 }

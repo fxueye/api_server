@@ -247,9 +247,18 @@ class Weixin extends MY_Controller {
 		);
 		$result = $this->wechat->createMenu ( $newmenu );
 	}
-	public function test() {
-		for($i = 0; $i < 10; $i ++) {
-			log_message ( 'error', '#####################test：' . $i );
-		}
-	}
+	function cron(){
+		$coupon = $this->randomCoupon();
+		$data = array(
+			"filter":array(
+				"is_to_all":true,
+				"tag_id":2
+			),
+			"text":array(
+				"content":$coupon
+			),
+			"msgtype":"text"
+		);
+        $this->wechat->sendGroupMassMessage($data);
+    }
 }
