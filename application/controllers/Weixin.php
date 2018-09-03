@@ -259,6 +259,8 @@ class Weixin extends MY_Controller {
 			),
 			"msgtype"=>"text"
 		);
-        $this->wechat->sendGroupMassMessage($data);
+        if(!$this->wechat->sendGroupMassMessage($data)){
+			log_message(ERROR,"code:" . $this->wechat->errCode ."   msg:" .$this->wechat->errMsg )
+		}
     }
 }
