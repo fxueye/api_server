@@ -250,14 +250,14 @@ class Weixin extends MY_Controller {
 	function cron(){
 		$coupon = $this->randomCoupon();
 		$data = array(
-			"filter":array(
-				"is_to_all":true,
-				"tag_id":2
+			"filter"=>array(
+				"is_to_all"=>true,
+				"tag_id"=>2
 			),
-			"text":array(
+			"text"=>array(
 				"content":$coupon
 			),
-			"msgtype":"text"
+			"msgtype"=>"text"
 		);
         $this->wechat->sendGroupMassMessage($data);
     }
