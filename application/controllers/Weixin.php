@@ -67,8 +67,9 @@ class Weixin extends MY_Controller {
 				$sendMsg = sprintf( "退出搜索模式:\n %s",$this->comd);
 				$this->wechat->text($sendMsg)->reply();
 			break;
-            default:
-                $this->wechat->text ( "感谢您的关注,我们会给您更好的服务,http://shop.php9.cn 随便逛逛吧！!!更多功能完善中！" )->reply ();
+			default:
+				$msg = sprintf("感谢您的关注,我们会给您更好的服务\n%s \nhttp://shop.php9.cn 随便逛逛吧！",$this->comd);
+                $this->wechat->text ( $msg )->reply ();
         }
 	}
 	private function sendCoupon($w = ""){
