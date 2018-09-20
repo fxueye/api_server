@@ -23,7 +23,7 @@ class Api extends MY_Controller {
 		// $ret = $this->api_model->get_coupon_info("571659414649");
 
 		// log_message ( 'info', 'key:' . $key );
-		$ret = $this->api_model->get_paoliang();
+		$ret = $this->api_model->get_top100();
 		echo $ret;
 	}
 	function randomCoupon($w="",$app_key="",$app_secret="",$app_pid=""){
