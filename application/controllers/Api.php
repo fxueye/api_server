@@ -24,7 +24,7 @@ class Api extends MY_Controller {
 
 		// log_message ( 'info', 'key:' . $key );
 		$ret = $this->api_model->get_paoliang();
-		echo json_encode($ret);
+		echo $ret;
 	}
 	function randomCoupon($w="",$app_key="",$app_secret="",$app_pid=""){
 		$words = array(
