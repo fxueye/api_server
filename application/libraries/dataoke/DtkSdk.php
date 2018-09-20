@@ -55,7 +55,7 @@ class DtkSdk{
         if($page != null){
             $fields["page"] = $page;
         }
-        $data = $this->http_get_data($baseUrl,$fields);
+        $data = $this->http_get_data(self::$baseUrl,$fields);
         return $data;
     }
 
