@@ -16,7 +16,7 @@ class Api_model extends MY_Model {
 		$this->tao_client->format = "json";
 		$this->set_taoke_param();
 
-		$this->load->libaray('dataoke/DtkSdk');
+		$this->load->library('dataoke/DtkSdk');
 		$this->dtkSdk = new DtkSdk();
 	}
 	public function get_qq_quan(){
