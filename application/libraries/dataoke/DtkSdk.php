@@ -46,12 +46,12 @@ class DtkSdk{
  *  1(默认值): 返回gbk编码json格式数据（此参数主要为了兼容之前的数据,后续将逐步取消,建议使用2）
  */
     function get_data($r,$type,$page = null){
-        $fields = array(){
+        $fields = array(
             "r"=>$r,
             "v"=>2,
             "type" => $type,
             "appkey"=>$this->appkey
-        };
+        );
         if($page != null){
             $fields["page"] = $page;
         }
