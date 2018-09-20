@@ -45,6 +45,16 @@ class DtkSdk{
  *	v	int	否	2: utf-8编码的json格式数据
  *  1(默认值): 返回gbk编码json格式数据（此参数主要为了兼容之前的数据,后续将逐步取消,建议使用2）
  */
+    function get_good($id){
+        $fields = array(
+            "r"=>self::$top,
+            "id"=>$id,
+            "v"=>2,     
+            "appkey"=>$this->appkey
+        );
+        $data = $this->http_get_data(self::$baseUrl,$fields);
+        return $data;
+    }
     function get_data($r,$type,$page = null){
         $fields = array(
             "r"=>$r,
