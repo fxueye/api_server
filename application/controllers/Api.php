@@ -25,6 +25,7 @@ class Api extends MY_Controller {
 		// log_message ( 'info', 'key:' . $key );
 		$ret = $this->api_model->get_top100();
 		$jsData = json_encode($ret,true);
+		print($jsData);
 		$result = $jsData["result"];
 		print($result);
 	}
