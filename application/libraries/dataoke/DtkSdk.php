@@ -8,14 +8,55 @@ class DtkSdk{
     public static $top = "Port/index";
 /**
  * 	名称	类型	必填	说明
+ * 网站数据
+ * 
+ * 	type	string	是	www_quan (网站专用、仅加入推广的商品)
+ *	appkey	String	是	大淘客appkey
+ *	v	int	否	2: utf-8编码的json格式数据
+ *  1(默认值): 返回gbk编码json格式数据（此参数主要为了兼容之前的数据,后续将逐步取消,建议使用2）
+ *	page	int	否	分页获取数据（每页200条）
+ *qq数据
  *	type	string	是	qq_quan 
  *  appkey	String	是	appkey
  *  v	int	否	2: utf-8编码的json格式数据
  *  1(默认值): 返回gbk编码json格式数据（此参数主要为了兼容之前的数据,后续将逐步取消,建议使用2）
  *  page	int	否	分页获取数据（每页200条）
+ * 全站领券
+ * 	type	string	是	total
+ *	appkey	String	是	大淘客appkey
+ *	v	int	否	2: utf-8编码的json格式数据
+ *  1(默认值): 返回gbk编码json格式数据（此参数主要为了兼容之前的数据,后续将逐步取消,建议使用2）
+ *	page	int	否	分页获取数据（每页200条）
+ * top100
+ * 	type	string	是	top100
+ *	appkey	String	是	大淘客appkey
+ *	v	int	否	2: utf-8编码的json格式数据
+ *  1(默认值): 返回gbk编码json格式数据（此参数主要为了兼容之前的数据,后续将逐步取消,建议使用2）
+ * 
+ * 实时跑量
+ * 	type	string	是	paoliang
+ *	appkey	String	是	大淘客appkey
+ *	v	int	否	2: utf-8编码的json格式数据
+ *   1(默认值): 返回gbk编码json格式数据（此参数主要为了兼容之前的数据,后续将逐步取消,建议使用2）
+ * 
+ * 单品详情页
+ *  	id	int	是	淘宝商品id或者是大淘客商品id
+ *	appkey	String	是	大淘客appkey
+ *	v	int	否	2: utf-8编码的json格式数据
+ *  1(默认值): 返回gbk编码json格式数据（此参数主要为了兼容之前的数据,后续将逐步取消,建议使用2）
  */
-    function get_con(){
-
+    function get_data($r,$type,$page = null){
+        $fields = array(){
+            "r"=>$r,
+            "v"=>2,
+            "type" => $type,
+            "appkey"=>$this->appkey
+        };
+        if($page != null){
+            $fields["page"] = $page;
+        }
+        $data = $this->http_get_data($baseUrl,$fields);
+        return $data;
     }
 
     function http_get_data($url, $fields=array()){

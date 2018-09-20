@@ -5,6 +5,7 @@ class Api_model extends MY_Model {
 	const DB_KEY = "";
 	private $pid = "";
 	private $adzoneId = "";
+	private $dtkSdk = null;
 	function __construct() {
 		parent::__construct(self::DB_KEY);
 		date_default_timezone_set('Asia/Shanghai'); 
@@ -15,6 +16,11 @@ class Api_model extends MY_Model {
 		$this->tao_client->format = "json";
 		$this->set_taoke_param();
 
+		$this->load->libaray('dataoke/DtkSdk');
+		$this->dtkSdk = new DtkSdk();
+	}
+	public function get_qq_quan(){
+		return $this->dtkSdk->get_data(DtkSdk::$qq,"qq_quan",1);
 	}
 	public function set_taoke_param($app_key = "",$app_secret = "",$tao_pid = ""){
 		$tao_app_key = get_env_config("tao_app_key");

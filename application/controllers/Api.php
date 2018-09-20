@@ -25,9 +25,11 @@ class Api extends MY_Controller {
         // $ret = $this->api_model->get_favorites(20,1,-1);
 
         // echo json_encode($ret);
-        $this->set_cache("key","1",3600 * 24);
-        $key = $this->get_cache("key2");
-        log_message ( 'info', 'key:' . $key );
+        // $this->set_cache("key","1",3600 * 24);
+        // $key = $this->get_cache("key2");
+        // log_message ( 'info', 'key:' . $key );
+        $ret = $this->api_model->get_qq_quan();
+        echo json_encode($ret);
     }
     function randomCoupon($w="",$app_key="",$app_secret="",$app_pid=""){
         $words = array(
