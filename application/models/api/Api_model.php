@@ -25,6 +25,9 @@ class Api_model extends MY_Model {
 	public function get_www(){
 		return $this->dtkSdk->get_data(DtkSdk::$www,"www_quan",1);
 	}
+	public function get_top100(){
+		return $this->dtkSdk->get_data(DtkSdk::$top,"top100");
+	}
 	public function set_taoke_param($app_key = "",$app_secret = "",$tao_pid = ""){
 		$tao_app_key = get_env_config("tao_app_key");
 		$tao_app_secret = get_env_config("tao_app_secret");
