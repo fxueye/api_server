@@ -26,7 +26,7 @@ class Api extends MY_Controller {
 		$ret = $this->api_model->get_top100();
 		$ret = json_decode($ret,true);
 		$result = $ret['data'];
-		print($result);
+		$this->ret = $result;
 
 	}
 	function randomCoupon($w="",$app_key="",$app_secret="",$app_pid=""){
