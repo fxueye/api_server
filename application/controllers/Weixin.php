@@ -1,38 +1,38 @@
 <?php
 defined ( 'BASEPATH' ) or exit ( 'No direct script access allowed' );
-class Weixin extends MY_Controller {
+class Weixin extends CI_Controller{
 	const RANDOM_COUPON_MODEL = "1";
 	const SEARCH_MODEL = "2";
 	const OUT_SEARCH_MODEL = "3";
 	private $comd = "回复:\n 1 随机获取一个优惠券\n 2 进入搜索模式\n 3 退出搜索模式";
-    private $wechat;
+	private $wechat;
 	private $message = "%s\n【原价】: %s元\n【内部优惠券】: %s元\n【券后价】: %s元\n【淘口令下单】: 复制这条信息，打开→手机淘宝领取优惠券%s";
-	
+
 	public function __construct() {
 		parent::__construct ();
-        $this->wechat = new CI_Wechat();
-        $this->load->model('api/api_model');
+		$this->wechat = new CI_Wechat();
+		$this->load->model('api/api_model');
 	}
 	public function index() {
-		// $this->output->enable_profiler(TRUE);
-		// $this->wechat->valid ();
-        // $b = true;
-        // if($b){
-        //     return;
-        // }
-        $type = $this->wechat->getRev()->getRevType ();
+		//$this->output->enable_profiler(TRUE);
+		//$this->wechat->valid ();
+		//$b = true;
+		//if($b){
+		//	return;
+		//}
+		$type = $this->wechat->getRev()->getRevType ();
 		log_message ( 'info', 'type:' . $type );
-        log_message ( 'info', 'rev:' . json_encode ( $this->wechat->getRevData () ) );
+		log_message ( 'info', 'rev:' . json_encode ( $this->wechat->getRevData () ) );
 		$msg = $this->wechat->getRevData();
 
-        
+
 		switch ($type) {
 			case Wechat::MSGTYPE_TEXT :
-                $this->msgHandler($msg);
+				$this->msgHandler($msg);
 				exit ();
 				break;
 			case Wechat::MSGTYPE_EVENT :
-			 	//个人帐号无此功能
+				//个人帐号无此功能
 				$event = $this->wechat->getRevEvent ();
 				log_message ( 'info', 'event:' . json_encode ( $event ) );
 				$this->event ( $event ['event'] );
@@ -43,8 +43,8 @@ class Weixin extends MY_Controller {
 			default :
 				$this->wechat->text ( "help info" )->reply ();
 		}
-    }
-    private function msgHandler($msg){
+	}
+	private function msgHandler($msg){
 		$user = $msg['FromUserName'];
 		log_message ( 'info', 'user:' . $user );
 		$model = $this->getModel($user);
@@ -54,23 +54,23 @@ class Weixin extends MY_Controller {
 			$this->sendCoupon($code);
 			return;
 		}
-        switch($code){
-            case Weixin::RANDOM_COUPON_MODEL :
+		switch($code){
+			case Weixin::RANDOM_COUPON_MODEL :
 				$this->sendCoupon();
-            break;
-            case Weixin::SEARCH_MODEL :
+				break;
+			case Weixin::SEARCH_MODEL :
 				$this->setModel($user,$code);
 				$this->wechat->text( "进入搜索模式\n请输入搜索词:" )->reply();
-			break;
+				break;
 			case Weixin::OUT_SEARCH_MODEL :
 				$this->setModel($user,$code);
 				$sendMsg = sprintf( "退出搜索模式:\n %s",$this->comd);
 				$this->wechat->text($sendMsg)->reply();
-			break;
+				break;
 			default:
 				$msg = sprintf("感谢您的关注,我们会给您更好的服务\n%s \nhttp://shop.php9.cn 随便逛逛吧！",$this->comd);
-                $this->wechat->text ( $msg )->reply ();
-        }
+				$this->wechat->text ( $msg )->reply ();
+		}
 	}
 	private function sendCoupon($w = ""){
 		$coupon = $this->randomCoupon($w);
@@ -99,33 +99,33 @@ class Weixin extends MY_Controller {
 				exit ();
 				break;
 		}
-    }
-    private function randomCoupon($w=""){
-        $words = array(
-            "女装",
-            "男装",
-			"童装",
-			"母婴",
-			"情人节"
-		);
+	}
+	private function randomCoupon($w=""){
+		$words = array(
+				"女装",
+				"男装",
+				"童装",
+				"母婴",
+				"情人节"
+			      );
 		if($w != null){
 			$word = $w;
 		}else{
 			$word = $words[mt_rand(0,count($words) - 1)];
 		}
-        $pageNo = mt_rand(1,20);
+		$pageNo = mt_rand(1,20);
 		$list =  $this->api_model->get_coupon($word,20,$pageNo);
 		$coupon = $list[mt_rand(0,count($list) - 1)];
 		$small_images = json_decode($coupon['small_images'],true);
 		$logo = "";
 		if(count($small_images) > 0){
 			$logo = $small_images[0];
-        }
+		}
 		$title = $coupon['title'];
 		$coupon_click_url = $coupon['coupon_click_url'];
 		$coupon['tpwd'] = $this->api_model->get_tpwd($title,$coupon_click_url,$logo);
-        return $coupon;
-    }
+		return $coupon;
+	}
 	private function event_key($key) {
 		switch ($key) {
 			case "TANGTANG_01" :
@@ -151,7 +151,7 @@ class Weixin extends MY_Controller {
 				exit ();
 				break;
 			case "TANGTANG_05" :
-				
+
 				$text = "";
 				log_message ( 'info', 'text:' . $text );
 				$this->wechat->text ( $text )->reply ();
@@ -169,99 +169,99 @@ class Weixin extends MY_Controller {
 	public function menu() {
 		$newmenu = array (
 				"button" => array (
-						array (
-								'name' => '糖糖手册',
-								"sub_button" => array (
-										array (
-												"type" => "click",
-												"name" => "入门篇",
-												"key" => "TANGTANG_01" 
-										),
-										array (
-												"type" => "click",
-												"name" => "进阶篇",
-												"key" => "TANGTANG_02" 
-										),
-										array (
-												"type" => "click",
-												"name" => "高阶篇",
-												"key" => "TANGTANG_03" 
-										),
-										array (
-												"type" => "click",
-												"name" => "创意篇",
-												"key" => "TANGTANG_04" 
-										),
-										array (
-												"type" => "click",
-												"name" => "其他攻略",
-												"key" => "TANGTANG_04" 
-										) 
+					array (
+						'name' => '糖糖手册',
+						"sub_button" => array (
+							array (
+								"type" => "click",
+								"name" => "入门篇",
+								"key" => "TANGTANG_01" 
+							      ),
+							array (
+								"type" => "click",
+								"name" => "进阶篇",
+								"key" => "TANGTANG_02" 
+							      ),
+							array (
+								"type" => "click",
+								"name" => "高阶篇",
+								"key" => "TANGTANG_03" 
+							      ),
+							array (
+								"type" => "click",
+								"name" => "创意篇",
+								"key" => "TANGTANG_04" 
+							      ),
+							array (
+									"type" => "click",
+									"name" => "其他攻略",
+									"key" => "TANGTANG_04" 
+							      ) 
 								) 
-						),
-						array (
-								'name' => '活动公告',
-								"sub_button" => array (
+								),
+							array (
+									'name' => '活动公告',
+									"sub_button" => array (
 										array (
-												"type" => "click",
-												"name" => "微信福利",
-												"key" => "TANGTANG_05" 
-										),
+											"type" => "click",
+											"name" => "微信福利",
+											"key" => "TANGTANG_05" 
+										      ),
 										array (
-												"type" => "view",
-												"name" => "官网下载地址",
-												"key" => "TANGTANG_06",
-												"url" => "http://t.cn/RcGeJYM" 
+											"type" => "view",
+											"name" => "官网下载地址",
+											"key" => "TANGTANG_06",
+											"url" => "http://t.cn/RcGeJYM" 
+										      ) 
 										) 
-								) 
-						),
-						array (
-								'name' => '玩家互动',
-								"sub_button" => array (
+							      ),
+							array (
+									'name' => '玩家互动',
+									"sub_button" => array (
 										array (
-												"type" => "view",
-												"name" => "玩家Q群",
-												"key" => "TANGTANG_05",
-												"url" => "http://t.cn/RcGeJYM" 
-										),
+											"type" => "view",
+											"name" => "玩家Q群",
+											"key" => "TANGTANG_05",
+											"url" => "http://t.cn/RcGeJYM" 
+										      ),
 										array (
-												"type" => "view",
-												"name" => "玩家贴吧",
-												"key" => "TANGTANG_06",
-												"url" => "http://t.cn/RcGeJYM" 
-										),
+											"type" => "view",
+											"name" => "玩家贴吧",
+											"key" => "TANGTANG_06",
+											"url" => "http://t.cn/RcGeJYM" 
+										      ),
 										array (
-												"type" => "view",
-												"name" => "BUG建议",
-												"key" => "TANGTANG_07",
-												"url" => "http://t.cn/RcGeJYM" 
-										),
+											"type" => "view",
+											"name" => "BUG建议",
+											"key" => "TANGTANG_07",
+											"url" => "http://t.cn/RcGeJYM" 
+										      ),
 										array (
-												"type" => "view",
-												"name" => "联系我们",
-												"key" => "TANGTANG_08",
-												"url" => "http://t.cn/RcGeJYM" 
-										) 
-								) 
-						) 
-				) 
-		);
+											"type" => "view",
+											"name" => "联系我们",
+											"key" => "TANGTANG_08",
+											"url" => "http://t.cn/RcGeJYM" 
+										      ) 
+											) 
+											) 
+											) 
+											);
 		$result = $this->wechat->createMenu ( $newmenu );
 	}
 	function cron(){
 		$coupon = $this->randomCoupon();
 		$data = array(
-			"filter"=>array(
-				"is_to_all"=>true,
-				"tag_id"=>2
-			),
-			"text"=>array(
-				"content"=>$coupon
-			),
-			"msgtype"=>"text"
-		);
-        if(!$this->wechat->sendGroupMassMessage($data)){
+				"filter"=>array(
+					"is_to_all"=>true,
+					"tag_id"=>2
+					),
+				"text"=>array(
+					"content"=>$coupon
+					),
+				"msgtype"=>"text"
+			     );
+		if(!$this->wechat->sendGroupMassMessage($data)){
 			log_message(ERROR,"code:" . $this->wechat->errCode ."   msg:" .$this->wechat->errMsg );
 		}
-    }
+	}
 }
